@@ -81,7 +81,7 @@ fun main() {
     val targetIP = "127.0.0.1" // Safe localhost scanning
     val portsToScan = listOf(21, 22, 25, 80, 443, 3306) // Common ports for demonstration
 
-    val useRealScan = true // Set false to use demo mode with predefined results
+    val useRealScan = false // Set false to use demo mode with predefined results
 
     val results = mutableListOf<PortResult>() // Holds all scan results
     val threads = mutableListOf<Thread>() // For running concurrent scans
@@ -126,25 +126,29 @@ fun main() {
 
     // Open Ports Table
     report.append("<h3>Open Ports</h3>")
-    report.append("<table border ='1' style='border-collapse: collapse;'>")
-
+    report.append("<table border='1' style='border-collapse: collapse;'>")
     report.append("<tr><th>Port</th><th>Service</th><th>Status</th><th>Recommendation</th><th>Example Command</th></tr>")
-        for (r in openPorts) {
-            report.append("<tr><td>$(r.port)</td><td>$(r.service)</td><td style='color:green; '>${r.status}</td><td>${r.recommendation}</td><td>${r.exampleLocalCommand}</td></tr>")
-        }
-        report.append("</table>")
+    for (r in openPorts) {
+        report.append("<tr><td>${r.port}</td><td>${r.service}</td><td style='color:green;'>${r.status}</td><td>${r.recommendation}</td><td>${r.exampleLocalCommand}</td></tr>")
+    }
+    report.append("</table>")
 
     // Closed Ports Table
     report.append("<h3>Closed Ports</h3>")
     report.append("<table border='1' style='border-collapse: collapse;'>")
     report.append("<tr><th>Port</th><th>Service</th><th>Status</th></tr>")
     for (r in closedPorts) {
-        report.append("<tr><td>$(r.port)</td><td>$(r.service)</td></td style='color:red;'>${r.status}</td></tr>")
+        report.append("<tr><td>${r.port}</td><td>${r.service}</td><td style='color:red;'>${r.status}</td></tr>")
     }
     report.append("</table>")
     report.append("<p>Total closed ports: ${closedPorts.size}</p>")
 
-    report.append("</body></html>")
+    // Save HTML report to disk
+    val reportFile = File("PortScanReport.html")
+    reportFile.writeText(report.toString())
+    println("Report generated: ${reportFile.absolutePath}")
+
+    println("NOTE: This scan runs safely on localhost only. No external networks were scanned.")
 }
 
 
