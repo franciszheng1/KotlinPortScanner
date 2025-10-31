@@ -52,7 +52,7 @@ These ports were chosen because they are commonly exposed on servers and are rel
 - Timeout: 200ms ensures the scanner doesn't hang on closed/unresponsive ports.
 
 
-**Why TCP?**
+## Why TCP?
 * TCP is used because it provides a reliable, connection-oriented protocol. Attempting a TCP connection to a port lets us determine if a service is actively listening.
 
 ## Demo Mode
@@ -109,4 +109,5 @@ Scans a single port and returns a PortResult:
 
 ## License
 This project is licensed under the MIT License. See LICENSE file for details.
+
 
