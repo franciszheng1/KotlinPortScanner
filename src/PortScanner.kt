@@ -114,6 +114,37 @@ fun main() {
             )
         )
     }
+
+    // Separate results into open and closed ports
+    val openPorts = results.filter { it.status == "OPEN" }
+    val closedPorts = results.filter { it.status == "CLOSED" }
+
+    // Generate HTML report
+    val report = StringBuilder()
+    report.append("<html><body>")
+    report.append("<h2>Port Scan Report - $targetIP</h2>")
+
+    // Open Ports Table
+    report.append("<h3>Open Ports</h3>")
+    report.append("<table border ='1' style='border-collapse: collapse;'>")
+
+    report.append("<tr><th>Port</th><th>Service</th><th>Status</th><th>Recommendation</th><th>Example Command</th></tr>")
+        for (r in openPorts) {
+            report.append("<tr><td>$(r.port)</td><td>$(r.service)</td><td style='color:green; '>${r.status}</td><td>${r.recommendation}</td><td>${r.exampleLocalCommand}</td></tr>")
+        }
+        report.append("</table>")
+
+    // Closed Ports Table
+    report.append("<h3>Closed Ports</h3>")
+    report.append("<table border='1' style='border-collapse: collapse;'>")
+    report.append("<tr><th>Port</th><th>Service</th><th>Status</th></tr>")
+    for (r in closedPorts) {
+        report.append("<tr><td>$(r.port)</td><td>$(r.service)</td></td style='color:red;'>${r.status}</td></tr>")
+    }
+    report.append("</table>")
+    report.append("<p>Total closed ports: ${closedPorts.size}</p>")
+
+    report.append("</body></html>")
 }
 
 
