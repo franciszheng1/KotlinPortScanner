@@ -71,7 +71,7 @@ val useRealScan = false // Change to true for real scan
 
 ## Data Class & Functions
 
-### 'PortResult' Data Class 
+### PortResult Data Class 
 Holds the scan results for each port: 
 
 ![PortResult Data Class](images/KotlinDataClassScreenshot.png)
@@ -109,5 +109,6 @@ Scans a single port and returns a PortResult:
 
 ## License
 This project is licensed under the MIT License. See LICENSE file for details.
+
 
 
