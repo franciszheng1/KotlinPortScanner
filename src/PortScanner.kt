@@ -67,11 +67,52 @@ fun scanPort(ip: String, port: Int) : PortResult {
             }
         )
     } catch (e: SocketTimeoutException) {
-        // Connection timed out -> port is closed
+        // Port did not respond within 200ms, mark as CLOSED
         PortResult(port, service, "CLOSED", "", "")
     } catch (e: Exception) {
-        // Any other connection error -> treat port as closed
+        // Any other error (connection refused, network error) is treated as CLOSED
         PortResult(port, service, "CLOSED", "", "")
+    }
+}
+
+// Main function
+// Coordinates scanning, collects results, and generates an HTML report
+fun main() {
+    val targetIP = "127.0.0.1" // Safe localhost scanning
+    val portsToScan = listOf(21, 22, 25, 80, 443, 3306) // Common ports for demonstration
+
+    val useRealScan = true // Set false to use demo mode with predefined results
+
+    val results = mutableListOf<PortResult>() // Holds all scan results
+    val threads = mutableListOf<Thread>() // For running concurrent scans
+
+    if (useRealScan) {
+        // Real scan mode
+        for (port in portsToScan) {
+            val t = thread {
+                val result = scanPort(targetIP, port)
+                // Thread-safe addition to the shared results list
+                synchronized(results) { results.add(result) }
+            }
+            threads.add(t)
+        }
+        // Wait for all threads to complete before generating report
+        threads.forEach { it.join() }
+    } else {
+        // Demo mode with predefined results
+        results.addAll(
+            listOf(
+                PortResult(22, "SSH", "OPEN", "Restrict SSH access to trusted IPS.",
+                    "sudo ufw allow from <trusted_IP> to any port 22"),
+                PortResult(80, "HTTP", "OPEN", "Keep web server updated and monitor traffic.",
+                    "sudo apt update && sudo apt upgrade"),
+                PortResult(443, "HTTPS", "OPEN", "Keep web server updated and monitor traffic.",
+                    "sudo apt update && sudo apt upgrade"),
+                PortResult(21, "FTP", "CLOSED", "", ""),
+                PortResult(25, "SMTP", "CLOSED", "", ""),
+                PortResult(3306, "MYSQL", "CLOSED", "", "")
+            )
+        )
     }
 }
 
