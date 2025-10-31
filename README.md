@@ -46,7 +46,7 @@ These ports were chosen because they are commonly exposed on servers and are rel
 3. Open ports include security recommendations and example local commands for securing them.
 4. The results are split into Open Ports and Closed Ports and saved as PortScanReport.html.
 
-### Technical Details
+## Technical Details
 - Concurrency: Uses kotlin.concurrent.thread to scan multiple ports simultaneously, improving speed.
 - Networking: Uses Java's Socket and InetSocketAddress to attempt TCP connections for each port.
 - Timeout: 200ms ensures the scanner doesn't hang on closed/unresponsive ports.
@@ -109,6 +109,7 @@ Scans a single port and returns a PortResult:
 
 ## License
 This project is licensed under the MIT License. See LICENSE file for details.
+
 
 
 
