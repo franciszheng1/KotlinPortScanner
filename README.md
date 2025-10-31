@@ -90,8 +90,9 @@ Scans a single port and returns a PortResult:
 
 1. Clone the repository: 
 
-git clone https://github.com/franciszheng1/KotlinPortScanner.git
-cd kotlin-port-scanner
+* git clone https://github.com/franciszheng1/KotlinPortScanner.git
+
+* cd kotlin-port-scanner
 
 2. Open the project in IntelliJ IDEA. 
 3. Run the main function in PortScanner.kt.
@@ -108,3 +109,4 @@ cd kotlin-port-scanner
 
 ## License
 This project is licensed under the MIT License. See LICENSE file for details.
+
